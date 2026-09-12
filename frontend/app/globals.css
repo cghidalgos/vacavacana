@@ -24,7 +24,7 @@ button, input, select { font:inherit; } button { cursor:pointer; } a { color:inh
 .hero-inner { max-width:1240px; width:100%; margin:auto auto 0; padding:60px 72px 46px; }
 .hero-photo .pill { color:#eaf3e6; background:#ffffff1f; border:1px solid #ffffff2e; backdrop-filter:blur(8px); }
 .hero-photo .pill span { background:#a9d49f; }
-.hero-photo h1 { margin:24px 0 20px; font-size:clamp(44px,6.2vw,82px); line-height:1.02; letter-spacing:-.065em; font-weight:700; color:#fff; text-shadow:0 2px 26px #0a180f5c; max-width:15ch; }
+.hero-photo h1 { margin:24px 0 20px; font-size:clamp(44px,6.2vw,82px); line-height:1.02; letter-spacing:-.065em; font-weight:700; color:#fff; text-shadow:0 2px 26px #0a180f5c; max-width:26ch; }
 .hero-photo em { color:#f0c079; font-style:normal; }
 .hero-photo .hero-lead { color:#dae5d4; font-size:18px; max-width:530px; line-height:1.65; text-shadow:0 1px 14px #0a180f47; }
 .hero-photo .text-link { color:#e9dcc2; }
