@@ -1,0 +1,12 @@
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+sqlalchemy==2.0.36
+pydantic==2.10.4
+python-multipart==0.0.20
+anthropic==1.5.0
+
+# El modelo se serializó con scikit-learn 1.6.1: cargar un pipeline con otra versión
+# puede dar avisos de incompatibilidad o fallar, así que la versión va fijada.
+scikit-learn==1.6.1
+pandas==2.3.2
+joblib==1.5.3

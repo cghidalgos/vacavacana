@@ -1,0 +1,47 @@
+services:
+  backend:
+    build: ./backend
+    container_name: vacas-backend
+    environment:
+      DATA_DIR: /data
+      # La clave se toma del .env de la raíz; nunca se escribe en este archivo.
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      ANTHROPIC_MODEL: ${ANTHROPIC_MODEL:-claude-opus-5}
+      CORS_ORIGINS: http://localhost:${FRONTEND_PORT:-3000},http://127.0.0.1:${FRONTEND_PORT:-3000}
+    ports:
+      - "${BACKEND_PORT:-8001}:8000"
+    volumes:
+      # Código montado: los cambios se recargan en caliente.
+      - ./backend:/app
+      # La base SQLite vive en la carpeta del proyecto, así se puede abrir con
+      # cualquier visor de SQLite desde el host.
+      - ./backend/data:/data
+      # El modelo entrenado, en solo lectura: al reentrenarlo desde el notebook basta
+      # reiniciar el backend para que sirva la versión nueva.
+      - ./modelo:/modelo:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  frontend:
+    build: ./frontend
+    container_name: vacas-frontend
+    environment:
+      # URL usada por el navegador del usuario.
+      NEXT_PUBLIC_API_URL: http://localhost:${BACKEND_PORT:-8001}
+      # URL usada por Next.js dentro de la red de Docker (SSR).
+      INTERNAL_API_URL: http://backend:8000
+      WATCHPACK_POLLING: "true"
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
+    volumes:
+      - ./frontend:/app
+      # Anónimos: evitan que el bind mount pise las dependencias instaladas en la imagen.
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      backend:
+        condition: service_healthy

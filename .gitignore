@@ -1,0 +1,14 @@
+.DS_Store
+
+# Contiene la clave de la API: nunca al repositorio (usa .env.example como plantilla)
+.env
+__pycache__/
+*.py[cod]
+.venv/
+backend/data/
+*.db
+node_modules/
+.next/
+
+# El modelo entrenado SÍ se versiona (892 KB): sin él la vista de predicción no
+# funciona al clonar el repositorio. Se regenera con modelo/modelo_clasificacion.ipynb.
