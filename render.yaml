@@ -1,0 +1,34 @@
+# Blueprint de Render: crea los dos servicios (New → Blueprint → este repo).
+# Las variables con sync: false se piden en el panel al crear el Blueprint.
+services:
+  - type: web
+    name: campoclaro-api
+    runtime: docker
+    plan: free
+    # Contexto en la raíz para que el modelo entrenado de modelo/ entre en la imagen.
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: ANTHROPIC_MODEL
+        value: claude-opus-5
+      # URL pública del frontend, p. ej. https://campoclaro-web.onrender.com
+      - key: CORS_ORIGINS
+        sync: false
+
+  - type: web
+    name: campoclaro-web
+    runtime: docker
+    plan: free
+    rootDir: frontend
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      # URL pública del backend, p. ej. https://campoclaro-api.onrender.com
+      # (Render las pasa también como argumentos de build).
+      - key: NEXT_PUBLIC_API_URL
+        sync: false
+      - key: INTERNAL_API_URL
+        sync: false

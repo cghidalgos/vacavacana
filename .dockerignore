@@ -1,0 +1,12 @@
+# Contexto de build del backend (raíz del repo): solo hacen falta backend/ y el modelo.
+.git/
+.env
+**/.DS_Store
+frontend/
+backend/data/
+**/__pycache__/
+**/*.py[cod]
+**/.venv/
+**/*.db
+modelo/*.ipynb
+modelo/*.csv

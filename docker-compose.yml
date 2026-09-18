@@ -1,7 +1,10 @@
 services:
   backend:
-    build: ./backend
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
     container_name: vacas-backend
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     environment:
       DATA_DIR: /data
       # La clave se toma del .env de la raíz; nunca se escribe en este archivo.
@@ -27,7 +30,9 @@ services:
       start_period: 10s
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      target: dev
     container_name: vacas-frontend
     environment:
       # URL usada por el navegador del usuario.
