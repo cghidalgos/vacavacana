@@ -1,10 +1,12 @@
 import type { Cow, RiskLevel } from './types'
 
 // En el navegador se usa la URL pública del backend; en SSR, el nombre del servicio de Docker.
-const BASE =
+// Se quita la barra final: con "https://x.onrender.com/" las rutas quedarían "//api/..." (404).
+const BASE = (
   (typeof window === 'undefined'
-    ? process.env.INTERNAL_API_URL
-    : process.env.NEXT_PUBLIC_API_URL) ?? 'http://localhost:8000'
+    ? process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL
+    : process.env.NEXT_PUBLIC_API_URL) || 'http://localhost:8000'
+).replace(/\/+$/, '')
 
 export type ApiCow = Cow & {
   risk: { level: RiskLevel; score: number; reasons: string[]; action: string }
