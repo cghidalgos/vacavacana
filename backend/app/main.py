@@ -15,8 +15,9 @@ from .database import Base, SessionLocal, engine, get_db
 from .risk import assess_risk, summarize
 from .seed import seed_if_empty
 
+# El navegador envía el origen sin barra final: se quita para que coincida.
 CORS_ORIGINS = [
-    o.strip()
+    o.strip().rstrip("/")
     for o in os.getenv("CORS_ORIGINS", "http://localhost:3000").split(",")
     if o.strip()
 ]
